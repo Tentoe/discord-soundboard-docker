@@ -1,0 +1,12 @@
+version: "2"
+services:
+  docker-soundboard:
+    image: docker-soundboard
+    build: .
+    restart: always
+    ports:
+      - 80:8080
+    environment:
+      DISCORD_BOT_USER_TOKEN: token
+    volumes:
+      - ./files:/home/node/build/files
