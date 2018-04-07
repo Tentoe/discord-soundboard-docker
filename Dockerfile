@@ -3,10 +3,6 @@ FROM node:9.10 as builder
 USER node
 WORKDIR /home/node/
 
-#RUN bash -c "git clone https://github.com/Tentoe/discord-soundboard-api.git && cd discord-soundboard-api && npm install && npm run build"
-
-#RUN bash -c "git clone https://github.com/Tentoe/discord-soundboard-webapp.git && cd discord-soundboard-webapp && npm install && npm run build"
-
 RUN git clone https://github.com/Tentoe/discord-soundboard-api.git && \
   cd discord-soundboard-api && \
   npm install && \
