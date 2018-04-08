@@ -7,6 +7,7 @@ services:
     restart: always
     environment:
       DISCORD_BOT_USER_TOKEN: ${DISCORD_BOT_USER_TOKEN}
+      SOUNDBOARD_DB: 'mongodb://db/soundboard'
     volumes:
       - ./files:/home/node/build/files
     networks:
@@ -28,7 +29,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./db:/data/db
       - ./db-dump:/dump
-  
+
 
 networks:
   traefik:
