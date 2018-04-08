@@ -4,9 +4,18 @@ services:
     image: docker-soundboard
     build: .
     restart: always
-    ports:
-      - 80:8080
     environment:
       DISCORD_BOT_USER_TOKEN: token
     volumes:
       - ./files:/home/node/build/files
+    networks:
+      traefik:
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: Host:some.host.com
+      traefik.port: "8080"
+      traefik.docker.network: traefik
+
+networks:
+  traefik:
+    external: true
