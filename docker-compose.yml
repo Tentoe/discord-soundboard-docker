@@ -2,20 +2,35 @@ version: "2"
 services:
   docker-soundboard:
     image: docker-soundboard
+    container_name: docker-soundboard
     build: .
     restart: always
     environment:
-      DISCORD_BOT_USER_TOKEN: token
+      DISCORD_BOT_USER_TOKEN: ${DISCORD_BOT_USER_TOKEN}
     volumes:
       - ./files:/home/node/build/files
     networks:
       traefik:
+      backend:
     labels:
       traefik.enable: "true"
-      traefik.frontend.rule: Host:some.host.com
+      traefik.frontend.rule: Host:${HOST_RULE}
       traefik.port: "8080"
       traefik.docker.network: traefik
+
+  db:
+    image: mongo:3
+    container_name: docker-soundboard-db
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./db:/data/db
+      - ./db-dump:/dump
+  
 
 networks:
   traefik:
     external: true
+  backend:
