@@ -1,0 +1,12 @@
+version: "2"
+services:
+  db:
+    image: mongo:3
+    container_name: docker-soundboard-db
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./db:/data/db
+      - ./db-dump:/dump
