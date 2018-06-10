@@ -10,8 +10,6 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-webapp.git && \
 
 FROM node:10.4
 
-RUN apt-get update && apt-get install ffmpeg -y
-
 USER node
 WORKDIR /home/node/
 
