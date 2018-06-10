@@ -26,4 +26,6 @@ COPY --from=builder /home/node/discord-soundboard-webapp/dist ./discord-soundboa
 
 EXPOSE 8080
 WORKDIR /home/node/discord-soundboard-api/
+# TODO find better way to install ffmpeg
+RUN npm i ffmpeg-binaries
 CMD ["npm", "start"]
