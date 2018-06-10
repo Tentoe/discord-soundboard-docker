@@ -5,6 +5,8 @@ services:
     container_name: docker-soundboard
     build: .
     restart: always
+    depends_on:
+      - db    
     environment:
       DISCORD_BOT_USER_TOKEN: ${DISCORD_BOT_USER_TOKEN}
       SOUNDBOARD_DB: 'mongodb://db/soundboard'
