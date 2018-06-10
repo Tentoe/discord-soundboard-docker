@@ -2,7 +2,6 @@ version: "2"
 services:
   docker-soundboard:
     image: docker-soundboard
-    container_name: docker-soundboard
     build: .
     restart: always
     depends_on:
