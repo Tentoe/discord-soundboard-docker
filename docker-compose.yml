@@ -8,10 +8,10 @@ services:
     depends_on:
       - db    
     environment:
-      DISCORD_BOT_USER_TOKEN: ${DISCORD_BOT_USER_TOKEN}
-      SOUNDBOARD_DB: 'mongodb://db/soundboard'
+      SOUNDBOARD_DISCORD_BOT_USER_TOKEN: ${SOUNDBOARD_DISCORD_BOT_USER_TOKEN}
+      REDIS_HOST: 'db'
     volumes:
-      - ./files:/home/node/build/files
+      - ./files:/home/node/discord-soundboard-api/soundfiles
     networks:
       traefik:
       backend:
@@ -22,15 +22,13 @@ services:
       traefik.docker.network: traefik
 
   db:
-    image: mongo:3
-    container_name: docker-soundboard-db
+    image: redis
     restart: always
-    networks:
-      - backend
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./db:/data/db
-      - ./db-dump:/dump
+      - ./data:/data
+    networks:
+      backend:
+
 
 
 networks:
