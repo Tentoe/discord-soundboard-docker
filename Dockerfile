@@ -19,7 +19,7 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-api.git && \
   cd discord-soundboard-api && \
   npm install
 
-COPY --from=builder /home/node/discord-soundboard-webapp/dist ./discord-soundboard-api/public
+COPY --from=builder /home/node/discord-soundboard-webapp/dist ./discord-soundboard-api/built/static
 
 
 EXPOSE 8080
