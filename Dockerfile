@@ -13,17 +13,21 @@ FROM node:10.4
 USER node
 WORKDIR /home/node/
 
-ENV NODE_ENV production
+ENV NODE_ENV development
 
-RUN git clone https://github.com/Tentoe/discord-soundboard-api.git && \
-  cd discord-soundboard-api && \
-  npm install
+RUN git clone https://github.com/Tentoe/discord-soundboard-api.git
 
-COPY --from=builder /home/node/discord-soundboard-webapp/dist ./discord-soundboard-api/built/static
+
+WORKDIR /home/node/discord-soundboard-api/
+
+RUN npm install && npm run build
+  
+
+COPY --from=builder /home/node/discord-soundboard-webapp/dist ./built/static
 
 
 EXPOSE 8080
-WORKDIR /home/node/discord-soundboard-api/
+
 # TODO find better way to install ffmpeg
 RUN npm i ffmpeg-binaries
 CMD ["npm", "start"]
