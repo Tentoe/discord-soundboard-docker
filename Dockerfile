@@ -10,7 +10,7 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-webapp.git && \
 
 FROM node:10.4-stretch
 
-RUN echo "deb http://www.deb-multimedia.org stretch main non-free 
+RUN echo "deb http://www.deb-multimedia.org stretch main non-free \n\
 deb-src http://www.deb-multimedia.org stretch main non-free" >> /etc/apt/sources.list && \
   apt-get update && \
   apt-get install deb-multimedia-keyring -y --allow-unauthenticated --no-install-recommends && \
