@@ -1,4 +1,4 @@
-FROM node:10.4 as builder
+FROM node:10.4-stretch as builder
 
 USER node
 WORKDIR /home/node/
@@ -8,7 +8,14 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-webapp.git && \
   npm install && \
   npm run build
 
-FROM node:10.4
+FROM node:10.4-stretch
+
+RUN echo "deb http://www.deb-multimedia.org stretch main non-free 
+deb-src http://www.deb-multimedia.org stretch main non-free" >> /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get install deb-multimedia-keyring -y --allow-unauthenticated --no-install-recommends && \
+  apt-get update && \
+  apt-get install ffmpeg -y --no-install-recommends
 
 USER node
 WORKDIR /home/node/
@@ -28,6 +35,4 @@ COPY --from=builder /home/node/discord-soundboard-webapp/dist ./built/static
 
 EXPOSE 8080
 
-# TODO find better way to install ffmpeg
-RUN npm i ffmpeg-binaries
 CMD ["npm", "start"]
