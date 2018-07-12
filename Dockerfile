@@ -1,4 +1,4 @@
-FROM node:10.4-stretch as builder
+FROM node:8.11-stretch as builder
 
 USER node
 WORKDIR /home/node/
@@ -8,7 +8,14 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-webapp.git && \
   npm install && \
   npm run build
 
-FROM node:10.4-stretch
+RUN git clone https://github.com/Tentoe/discord-soundboard-api.git && \
+  cd discord-soundboard-api && \
+  npm install && \
+  npm run build
+
+
+
+FROM node:8.11-stretch
 
 RUN echo "deb http://www.deb-multimedia.org stretch main non-free \n\
 deb-src http://www.deb-multimedia.org stretch main non-free" >> /etc/apt/sources.list && \
@@ -22,16 +29,12 @@ WORKDIR /home/node/
 
 ENV NODE_ENV development
 
-RUN git clone https://github.com/Tentoe/discord-soundboard-api.git
-
-
-WORKDIR /home/node/discord-soundboard-api/
-
-RUN npm install && npm run build
   
-
+COPY --from=builder /home/node/discord-soundboard-api/built .
+COPY --from=builder /home/node/discord-soundboard-api/package* ./
 COPY --from=builder /home/node/discord-soundboard-webapp/dist ./built/static
 
+RUN npm i --only=production
 
 EXPOSE 8080
 
