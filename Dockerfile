@@ -14,7 +14,6 @@ RUN git clone https://github.com/Tentoe/discord-soundboard-api.git && \
   npm run build
 
 
-
 FROM node:8.11-stretch
 
 RUN echo "deb http://www.deb-multimedia.org stretch main non-free \n\
@@ -30,7 +29,7 @@ WORKDIR /home/node/
 ENV NODE_ENV development
 
   
-COPY --from=builder /home/node/discord-soundboard-api/built .
+COPY --from=builder /home/node/discord-soundboard-api/built ./built
 COPY --from=builder /home/node/discord-soundboard-api/package* ./
 COPY --from=builder /home/node/discord-soundboard-webapp/dist ./built/static
 

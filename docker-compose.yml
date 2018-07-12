@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   docker-soundboard:
     image: docker-soundboard
@@ -6,9 +6,7 @@ services:
     restart: always
     depends_on:
       - db    
-    environment:
-      SOUNDBOARD_DISCORD_BOT_USER_TOKEN: ${SOUNDBOARD_DISCORD_BOT_USER_TOKEN}
-      REDIS_HOST: 'db'
+    env_file: .env
     volumes:
       - ./files:/home/node/discord-soundboard-api/soundfiles
     networks:
@@ -17,7 +15,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.frontend.rule: Host:${HOST_RULE}
-      traefik.port: "8080"
+      traefik.port: "3000"
       traefik.docker.network: traefik
 
   db:
