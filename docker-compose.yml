@@ -4,14 +4,16 @@ services:
     image: docker-soundboard
     build: .
     restart: always
+    ports:
+#     - "3000:3000"
     depends_on:
       - db    
     env_file: .env
     volumes:
-      - ./files:/home/node/discord-soundboard-api/soundfiles
+      - ./files:/home/node/soundfiles
     networks:
       traefik:
-      backend:
+      default:
     labels:
       traefik.enable: "true"
       traefik.frontend.rule: Host:${HOST_RULE}
@@ -23,12 +25,11 @@ services:
     restart: always
     volumes:
       - ./data:/data
-    networks:
-      backend:
+
 
 
 
 networks:
   traefik:
     external: true
-  backend:
+
